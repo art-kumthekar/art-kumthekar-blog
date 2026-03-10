@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function CategoryFilter({
   categories,
@@ -9,16 +9,17 @@ export default function CategoryFilter({
 }) {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const active = searchParams.get('category') || 'All';
+  const active = searchParams.get("category") || "All";
 
   function handleFilter(cat: string) {
     const params = new URLSearchParams(searchParams.toString());
-    if (cat === 'All') {
-      params.delete('category');
+    if (cat === "All") {
+      params.delete("category");
     } else {
-      params.set('category', cat);
+      params.set("category", cat);
     }
-    router.push(`/blog?${params.toString()}`);
+    const qs = params.toString();
+    router.push(qs ? "/?" + qs : "/");
   }
 
   return (
@@ -27,11 +28,11 @@ export default function CategoryFilter({
         <button
           key={cat}
           onClick={() => handleFilter(cat)}
-          className={`px-4 py-2 rounded-full text-sm transition-colors ${
+          className={"px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 " + (
             active === cat
-              ? 'bg-navy text-white'
-              : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-          }`}
+              ? "bg-navy text-white shadow-lg shadow-navy/20"
+              : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+          )}
         >
           {cat}
         </button>

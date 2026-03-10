@@ -1,18 +1,18 @@
 'use client';
 
-import Link from 'next/link';
-import { NAV_LINKS } from '@/lib/constants';
+import Link from "next/link";
+import { NAV_LINKS } from "@/lib/constants";
 
 export default function MobileMenu({ onClose }: { onClose: () => void }) {
   return (
-    <div className="fixed inset-0 z-50 bg-white">
-      <div className="flex items-center justify-between px-6 h-16 border-b border-gray-100">
-        <span className="text-lg font-semibold text-gray-900 tracking-tight">
+    <div className="fixed inset-0 z-50 bg-surface-dark/95 backdrop-blur-xl">
+      <div className="flex items-center justify-between px-6 h-16 border-b border-white/5">
+        <span className="text-lg font-semibold text-white tracking-tight">
           Art Kumthekar
         </span>
         <button
           onClick={onClose}
-          className="p-2 text-gray-500 hover:text-gray-900"
+          className="p-2 text-white/60 hover:text-white"
           aria-label="Close menu"
         >
           <svg
@@ -38,7 +38,7 @@ export default function MobileMenu({ onClose }: { onClose: () => void }) {
               <Link
                 href={link.href}
                 onClick={onClose}
-                className="text-xl font-medium text-gray-900 hover:text-navy transition-colors"
+                className="text-xl font-medium text-white/80 hover:text-white transition-colors"
               >
                 {link.label}
               </Link>

@@ -1,21 +1,36 @@
 'use client';
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useState } from 'react';
-import MobileMenu from './MobileMenu';
-import { NAV_LINKS } from '@/lib/constants';
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
+import MobileMenu from "./MobileMenu";
+import { NAV_LINKS } from "@/lib/constants";
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
 
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-100">
-      <nav className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+    <header
+      className={"fixed top-0 left-0 right-0 z-40 transition-all duration-300 " + (
+        scrolled
+          ? "bg-white/80 backdrop-blur-xl shadow-sm"
+          : "bg-transparent"
+      )}
+    >
+      <nav className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         <Link
           href="/"
-          className="text-lg font-semibold text-gray-900 tracking-tight"
+          className={"text-lg font-semibold tracking-tight transition-colors " + (
+            scrolled ? "text-gray-900" : "text-white"
+          )}
         >
           Art Kumthekar
         </Link>
@@ -25,11 +40,11 @@ export default function Header() {
             <li key={link.href}>
               <Link
                 href={link.href}
-                className={`text-sm transition-colors ${
+                className={"text-sm transition-colors " + (
                   pathname === link.href
-                    ? 'text-navy font-medium'
-                    : 'text-gray-500 hover:text-gray-900'
-                }`}
+                    ? scrolled ? "text-navy font-medium" : "text-white font-medium"
+                    : scrolled ? "text-gray-500 hover:text-gray-900" : "text-white/60 hover:text-white"
+                )}
               >
                 {link.label}
               </Link>
@@ -38,7 +53,9 @@ export default function Header() {
         </ul>
 
         <button
-          className="md:hidden p-2 text-gray-500 hover:text-gray-900"
+          className={"md:hidden p-2 transition-colors " + (
+            scrolled ? "text-gray-500 hover:text-gray-900" : "text-white/60 hover:text-white"
+          )}
           onClick={() => setMobileOpen(true)}
           aria-label="Open menu"
         >

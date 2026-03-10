@@ -1,15 +1,15 @@
-import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
-import { compileMDX } from 'next-mdx-remote/rsc';
-import Container from '@/components/ui/Container';
-import BlogPostHeader from '@/components/blog/BlogPostHeader';
-import PageTransition from '@/components/ui/PageTransition';
-import { mdxComponents } from '@/components/mdx/MDXComponents';
-import { getPostBySlug, getPostSlugs, getAllPosts } from '@/lib/posts';
-import { PostFrontmatter } from '@/lib/types';
-import readingTime from 'reading-time';
-import remarkGfm from 'remark-gfm';
-import Link from 'next/link';
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { compileMDX } from "next-mdx-remote/rsc";
+import Container from "@/components/ui/Container";
+import BlogPostHeader from "@/components/blog/BlogPostHeader";
+import PageTransition from "@/components/ui/PageTransition";
+import { mdxComponents } from "@/components/mdx/MDXComponents";
+import { getPostBySlug, getPostSlugs } from "@/lib/posts";
+import { PostFrontmatter } from "@/lib/types";
+import readingTime from "reading-time";
+import remarkGfm from "remark-gfm";
+import Link from "next/link";
 
 export async function generateStaticParams() {
   const slugs = getPostSlugs();
@@ -38,7 +38,7 @@ export async function generateMetadata({
     openGraph: {
       title: frontmatter.title,
       description: frontmatter.description,
-      type: 'article',
+      type: "article",
       publishedTime: frontmatter.date,
       authors: [frontmatter.author],
     },
@@ -69,8 +69,8 @@ export default async function BlogPostPage({
 
   return (
     <PageTransition>
-      <Container className="py-20">
-        <article className="max-w-3xl mx-auto">
+      <section className="bg-surface-dark pt-32 pb-16">
+        <div className="max-w-3xl mx-auto px-6">
           <BlogPostHeader
             title={frontmatter.title}
             date={frontmatter.date}
@@ -78,12 +78,16 @@ export default async function BlogPostPage({
             readingTime={stats.text}
             author={frontmatter.author}
           />
-          <div className="prose prose-gray prose-lg max-w-none mt-10 prose-headings:font-semibold prose-headings:tracking-tight prose-a:text-navy">
+        </div>
+      </section>
+      <Container className="py-16">
+        <article className="max-w-3xl mx-auto">
+          <div className="prose prose-gray prose-lg max-w-none prose-headings:font-semibold prose-headings:tracking-tight prose-a:text-navy">
             {content}
           </div>
           <div className="mt-16 pt-8 border-t border-gray-100">
             <Link
-              href="/blog"
+              href="/"
               className="text-navy hover:underline text-sm"
             >
               &larr; Back to all posts
