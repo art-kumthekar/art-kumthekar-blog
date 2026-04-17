@@ -17,9 +17,7 @@ export const SOCIAL_LINKS = {
 
 export const BLOG_CATEGORIES = [
   "All",
-  "Private Equity",
-  "Market Analysis",
-  "Career Advice",
-  "Venture Capital",
-  "Climate Tech",
+  "Industry & Strategy",
+  "Investing",
+  "Career Learnings",
 ];
